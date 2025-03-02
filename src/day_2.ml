@@ -28,14 +28,16 @@ printf "day 2 part 1 output: %i\n" (List.length (List.filter (fun x -> is_safe t
 (* let remove_one_index (l: int list) = fun (idx: int) -> (l |> List.filteri (fun (i: int) (tmp: int) -> i != idx)) ;; *)
 (* let get_safe_lines = (fun l -> (List.init (List.length l) Fun.id) |> List.map (remove_one_index l) |> List.filter (fun e -> is_safe true e));; *)
 (* input |> List.map get_safe_lines |> List.filter (fun f -> List.length f > 0) |> List.length |> printf "%i\n" *)
+let positive_len len = len > 0 ;;
+let remove_one_index idx l = List.filteri (fun i tmp -> i != idx) l ;;
 
 input
 |> List.map (fun l -> List.init (List.length l) Fun.id
     |> List.map (fun idx -> l
-        |> List.filteri (fun i tmp -> i != idx))
+        |> remove_one_index idx)
     |> List.filter (is_safe true))
 |> List.map List.length
-|> List.filter (fun len -> len > 0)
+|> List.filter positive_len
 |> List.length
 |> printf "day 2 part 2 output: %i\n"
 
