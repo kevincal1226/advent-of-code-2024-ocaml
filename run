@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -Eeuo pipefail
+
+if [ -z "$1" ]; then
+    echo "Usage: $0 <day_number>"
+    exit 1
+fi
+
+DAY=$1
+
+ocamlc -o "day_$DAY" "src/day_$DAY.ml" && "./day_$DAY"
+
+./clean
