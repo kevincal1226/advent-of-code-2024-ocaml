@@ -50,16 +50,17 @@ let rec find_cycle curr_row curr_col curr_dir dirs grid path =
                 find_cycle (curr_row + dirs.(curr_dir).(0)) (curr_col + dirs.(curr_dir).(1)) curr_dir dirs grid path
 ;;
 
-grid
-    |> Array.mapi (fun row_idx row -> row
-        |> Array.mapi (fun col_idx _ -> 
-            match grid.(row_idx).(col_idx) with
+path
+    |> Hashtbl.to_seq_keys
+    |> Seq.map (fun (row, col) ->
+        match grid.(row).(col) with
         |'.' -> let ret = begin
-                grid.(row_idx).(col_idx) <- '#';
-            let cycle = find_cycle start_row start_col 0 dirs grid (Hashtbl.create 1) in grid.(row_idx).(col_idx) <- '.';
+                grid.(row).(col) <- '#';
+                let cycle = find_cycle start_row start_col 0 dirs grid (Hashtbl.create 1)
+                in grid.(row).(col) <- '.';
                 cycle
-                end in ret
+        end in
+        ret
         |_ -> 0)
-    |> Array.fold_left (+) 0)
-    |> Array.fold_left(+) 0
-|> Printf.printf "day 6 part 2 output: %i\n";;
+    |> Seq.fold_left (+) 0
+|> Printf.printf "day 6 part 2 output: %i\n"
