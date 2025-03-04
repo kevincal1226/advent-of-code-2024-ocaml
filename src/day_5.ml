@@ -39,7 +39,7 @@ let rec check_valid_update orders l r update =
 let orders, updates = read_input (Hashtbl.create 100) [];;
 
 updates
-|> Array.map (fun f -> check_valid_update orders 0 1 f)
+|> Array.map (check_valid_update orders 0 1)
 |> Array.fold_left (+) 0
 |> printf "day 5 part 1 output: %i\n";;
 
@@ -61,6 +61,6 @@ let rec fix_update orders l r fixed update =
 ;;
 
 updates
-    |> Array.map (fun f -> fix_update orders 0 1 false f)
+    |> Array.map (fix_update orders 0 1 false)
     |> Array.fold_left (+) 0
     |> printf "day 5 part 2 output: %i\n"
