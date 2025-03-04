@@ -16,15 +16,11 @@ let rec read_input orders updates =
     let line = read_line () in
     match String.length line with
     | 5 ->
-      let split =
-        String.split_on_char '|' line |> Array.of_list |> Array.map int_of_string
-      in
+      let split = String.split_on_char '|' line |> Array.of_list |> Array.map int_of_string in
       insert_pair orders split.(0) split.(1);
       read_input orders updates
     | _ ->
-      let split =
-        String.split_on_char ',' line |> Array.of_list |> Array.map int_of_string
-      in
+      let split = String.split_on_char ',' line |> Array.of_list |> Array.map int_of_string in
       read_input orders (split :: updates)
   with
   | End_of_file -> orders, updates |> Array.of_list
@@ -46,10 +42,7 @@ let rec check_valid_update orders l r update =
 
 let orders, updates = read_input (Hashtbl.create 100) [];;
 
-updates
-|> Array.map (check_valid_update orders 0 1)
-|> Array.fold_left ( + ) 0
-|> printf "day 5 part 1 output: %i\n"
+updates |> Array.map (check_valid_update orders 0 1) |> Array.fold_left ( + ) 0 |> printf "day 5 part 1 output: %i\n"
 
 (* part 2 *)
 let rec fix_update orders l r fixed update =
@@ -70,7 +63,4 @@ let rec fix_update orders l r fixed update =
          fix_update orders l (r + 1) true update))
 ;;
 
-updates
-|> Array.map (fix_update orders 0 1 false)
-|> Array.fold_left ( + ) 0
-|> printf "day 5 part 2 output: %i\n"
+updates |> Array.map (fix_update orders 0 1 false) |> Array.fold_left ( + ) 0 |> printf "day 5 part 2 output: %i\n"

@@ -21,18 +21,11 @@ let rec is_safe safety lst =
     let diff1 = List.nth lst 0 - List.nth lst 1 in
     let diff2 = List.nth lst 1 - List.nth lst 2 in
     is_safe
-      (abs diff1 >= 1
-       && abs diff1 <= 3
-       && abs diff2 >= 1
-       && abs diff2 <= 3
-       && diff1 * diff2 > 0
-       && safety)
+      (abs diff1 >= 1 && abs diff1 <= 3 && abs diff2 >= 1 && abs diff2 <= 3 && diff1 * diff2 > 0 && safety)
       (List.tl lst)
 ;;
 
-printf
-  "day 2 part 1 output: %i\n"
-  (List.length (List.filter (fun x -> is_safe true x) input))
+printf "day 2 part 1 output: %i\n" (List.length (List.filter (fun x -> is_safe true x) input))
 
 (* part 2 *)
 
@@ -46,9 +39,7 @@ let remove_one_index idx l = List.filteri (fun i tmp -> i != idx) l;;
 
 input
 |> List.map (fun l ->
-  List.init (List.length l) Fun.id
-  |> List.map (fun idx -> l |> remove_one_index idx)
-  |> List.filter (is_safe true))
+  List.init (List.length l) Fun.id |> List.map (fun idx -> l |> remove_one_index idx) |> List.filter (is_safe true))
 |> List.map List.length
 |> List.filter positive_len
 |> List.length

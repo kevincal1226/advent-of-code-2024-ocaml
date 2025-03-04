@@ -14,11 +14,7 @@ let rec read_input curr_row start_row start_col grid =
 let start_row, start_col, grid = read_input 0 0 0 []
 
 let rec trace_path curr_row curr_col curr_dir dirs grid path =
-  if
-    curr_row < 0
-    || curr_col < 0
-    || curr_row >= Array.length grid
-    || curr_col >= Array.length grid.(0)
+  if curr_row < 0 || curr_col < 0 || curr_row >= Array.length grid || curr_col >= Array.length grid.(0)
   then Hashtbl.length path
   else if grid.(curr_row).(curr_col) = '#'
   then (
@@ -27,32 +23,18 @@ let rec trace_path curr_row curr_col curr_dir dirs grid path =
     let new_col = curr_col - dirs.(curr_dir).(1) + dirs.(new_dir).(1) in
     trace_path new_row new_col new_dir dirs grid path)
   else (
-    let () =
-      if not (Hashtbl.mem path (curr_row, curr_col))
-      then Hashtbl.add path (curr_row, curr_col) 1
-    in
-    trace_path
-      (curr_row + dirs.(curr_dir).(0))
-      (curr_col + dirs.(curr_dir).(1))
-      curr_dir
-      dirs
-      grid
-      path)
+    let () = if not (Hashtbl.mem path (curr_row, curr_col)) then Hashtbl.add path (curr_row, curr_col) 1 in
+    trace_path (curr_row + dirs.(curr_dir).(0)) (curr_col + dirs.(curr_dir).(1)) curr_dir dirs grid path)
 ;;
 
 let path = Hashtbl.create 1;;
 
-trace_path start_row start_col 0 dirs grid path
-|> Printf.printf "day 6 part 1 output: %i\n"
+trace_path start_row start_col 0 dirs grid path |> Printf.printf "day 6 part 1 output: %i\n"
 
 (* part 2 *)
 
 let rec find_cycle curr_row curr_col curr_dir dirs grid path =
-  if
-    curr_row < 0
-    || curr_col < 0
-    || curr_row >= Array.length grid
-    || curr_col >= Array.length grid.(0)
+  if curr_row < 0 || curr_col < 0 || curr_row >= Array.length grid || curr_col >= Array.length grid.(0)
   then 0
   else if grid.(curr_row).(curr_col) = '#'
   then (
@@ -65,13 +47,7 @@ let rec find_cycle curr_row curr_col curr_dir dirs grid path =
     | true -> 1
     | false ->
       Hashtbl.add path (curr_row, curr_col, curr_dir) 1;
-      find_cycle
-        (curr_row + dirs.(curr_dir).(0))
-        (curr_col + dirs.(curr_dir).(1))
-        curr_dir
-        dirs
-        grid
-        path)
+      find_cycle (curr_row + dirs.(curr_dir).(0)) (curr_col + dirs.(curr_dir).(1)) curr_dir dirs grid path)
 ;;
 
 path

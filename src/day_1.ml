@@ -5,9 +5,7 @@ open String
 let rec read_input acc1 acc2 =
   try
     let a = split_on_char ' ' (read_line ()) in
-    read_input
-      (int_of_string (List.nth a 0) :: acc1)
-      (int_of_string (List.nth a 1) :: acc2)
+    read_input (int_of_string (List.nth a 0) :: acc1) (int_of_string (List.nth a 1) :: acc2)
   with
   | End_of_file -> acc1, acc2
 ;;
