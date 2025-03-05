@@ -42,4 +42,4 @@ let rec backtrack target curr arr idx =
 input
 |> List.filter_map (fun (target, eq) -> if backtrack target eq.(0) eq 1 then Some target else None)
 |> List.fold_left ( + ) 0
-|> printf "day 7 part 1 output: %i\n"
+|> printf "day 7 part 2 output: %i\n"
