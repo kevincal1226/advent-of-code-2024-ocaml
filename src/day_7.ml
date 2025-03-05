@@ -28,13 +28,13 @@ input
 
 (* part 2 *)
 
-let offset (n : float) = 10. ** (1. +. Float.floor (log10 n)) |> int_of_float
+let offset (n : int) = 10. ** (1. +. (n |> float_of_int |> log10 |> Float.floor)) |> int_of_float
 
 let rec backtrack target curr arr idx =
   try
     backtrack target (curr + arr.(idx)) arr (succ idx)
     || backtrack target (curr * arr.(idx)) arr (succ idx)
-    || backtrack target ((curr * (float_of_int arr.(idx) |> offset)) + arr.(idx)) arr (succ idx)
+    || backtrack target ((curr * offset arr.(idx)) + arr.(idx)) arr (succ idx)
   with
   | Invalid_argument _ -> target = curr
 ;;
