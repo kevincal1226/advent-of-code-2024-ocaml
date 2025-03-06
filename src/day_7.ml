@@ -28,7 +28,7 @@ input
 
 (* part 2 *)
 
-let offset n = 10. ** (1. +. (n |> float_of_int |> log10 |> Float.floor)) |> int_of_float
+let offset n = 10. ** (n |> float_of_int |> log10 |> Float.floor |> ( +. ) 1.) |> int_of_float
 
 let rec backtrack target curr arr idx =
   try
